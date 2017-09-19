@@ -65,6 +65,7 @@ module.exports = function(app) {
         });
       });
   });
+
   app.post("/api/deleteUsers", (req, res) => {
     db.User
       .destroy({
@@ -88,6 +89,8 @@ module.exports = function(app) {
   //If a user sends an sms message
   app.post("/sms", bodyParser, (req, res) => {
     const twiml = new MessagingResponse();
+
+    console.log(`${req.body}`);
 
     //Check to see if a user is in the current game.
     db.User
