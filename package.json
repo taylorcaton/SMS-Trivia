@@ -1,0 +1,34 @@
+{
+  "name": "smsTester",
+  "version": "1.0.0",
+  "description": "smsTester",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taylorcaton/smsTester.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taylorcaton/smsTester/issues"
+  },
+  "homepage": "https://github.com/taylorcaton/smsTester#readme",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "firebase": "^4.3.1",
+    "mysql2": "^1.4.2",
+    "opentriviaapi": "0.0.9",
+    "path": "^0.12.7",
+    "random-name": "^0.1.2",
+    "sequelize": "^4.8.4",
+    "sequelize-cli": "^3.0.0-3",
+    "twilio": "^3.6.7"
+  }
+}
