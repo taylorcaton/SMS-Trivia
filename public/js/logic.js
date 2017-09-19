@@ -137,12 +137,10 @@ function updateAnswers() {
 function saveCurrentTimeToFirebase() {
   var time = Date.now();
   console.log(`Curent time going to firebase: ${time}`);
-  database
-    .ref("TimeStart")
-    .set({
-      time: time
-    })
-  }
+  database.ref("TimeStart").set({
+    time: time
+  });
+}
 
 $("#startGame").click(function() {
   console.log($("#category").val());
@@ -171,29 +169,31 @@ $("#nextQuestion").click(function() {
 });
 
 $("#resetApp").click(() => {
-  database
-    .ref("CurrentQuestion")
-    .set({
-      currentQuestion: 1
-    })
-    .then(() => {
-      database
-        .ref("Users")
-        .set({
-          data: []
-        })
-        .then(() => {
-          updatePlayerBox();
-          database
-            .ref("Answers")
-            .set({
-              answers: []
-            })
-            .then(() => {
-              window.location = "/";
-            });
-        });
-    });
+  $.post("/api/deleteUsers", () => {
+    database
+      .ref("CurrentQuestion")
+      .set({
+        currentQuestion: 1
+      })
+      .then(() => {
+        database
+          .ref("Users")
+          .set({
+            data: []
+          })
+          .then(() => {
+            updatePlayerBox();
+            database
+              .ref("Answers")
+              .set({
+                answers: []
+              })
+              .then(() => {
+                window.location = "/";
+              });
+          });
+      });
+  });
 });
 
 updateQuestionBox();
