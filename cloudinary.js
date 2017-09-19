@@ -4,16 +4,15 @@ cloudinary.config({
   api_key: '779359958168278', 
   api_secret: 'hIsjHEv8E8LGQoEl_sEoANpyQ_Q' 
 });
-var userImage = '../../ChewieHoth.png'
 
 // Upload code
 
 function upload(userImage) {
-    cloudinary.uploader.upload(userImage, function(result) {
+    cloudinary.uploader.upload('../../../testpic.jpg', function(result) {
     console.log(result);
     },
     {
-        public_id: userID, 
+        public_id: 'test', 
         crop: 'limit',
         width: 2000,
         height: 2000,
@@ -30,7 +29,7 @@ function upload(userImage) {
   })      
 };
 
-
+upload();
 // Image manipulation code
 
 /*function transform(newImage) {
