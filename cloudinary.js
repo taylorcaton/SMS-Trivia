@@ -4,7 +4,7 @@ cloudinary.config({
   api_key: '779359958168278', 
   api_secret: 'hIsjHEv8E8LGQoEl_sEoANpyQ_Q' 
 });
-
+var userImage = '../../ChewieHoth.png'
 
 // Upload code
 
