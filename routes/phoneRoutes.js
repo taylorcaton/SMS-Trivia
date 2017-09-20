@@ -90,8 +90,6 @@ module.exports = function(app) {
   app.post("/sms", bodyParser, (req, res) => {
     const twiml = new MessagingResponse();
 
-    console.log(`${req.body}`);
-
     //Check to see if a user is in the current game.
     db.User
       .findAll({
@@ -104,6 +102,38 @@ module.exports = function(app) {
           console.log(
             `Phone Number Found! > ${data[0].phoneNumber} (${data[0].name})`
           );
+          var avatar;
+
+          //Did the user send an image?
+          // =======================================================================
+
+          if (req.body.NumMedia !== "0") {
+            avatar = req.body.MediaURL0;
+            db.User
+              .update({ avatar: avatar }, { where: { id: data[0].id } })
+              .then(() => {
+                db.User.findAll({}).then(data => {
+                  var arr = [];
+                  data.forEach(function(ele) {
+                    arr.push(ele.dataValues);
+                  });
+                  firebase
+                    .ref("Users")
+                    .set({
+                      data: arr
+                    })
+                    .then(() => {
+                      twiml.message(
+                        `${req.body.Body}, Your avatar has been updated.`
+                      );
+                      res.writeHead(200, { "Content-Type": "text/xml" });
+                      res.end(twiml.toString());
+                      return;
+                    });
+                });
+              });
+          }
+
           var alreadyGuessed = false;
           firebase.ref().once("value", function(snapshot) {
             console.log(snapshot.child("Answers").val());
