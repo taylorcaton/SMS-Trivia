@@ -107,32 +107,35 @@ module.exports = function(app) {
           //Did the user send an image?
           // =======================================================================
 
-          if (req.body.NumMedia !== "0") {
-            avatar = req.body.MediaUrl0;
-            console.log(`${avatar}`);
-            db.User
-              .update({ avatar: avatar }, { where: { id: data[0].id } })
-              .then(() => {
-                db.User.findAll({}).then(data2 => {
-                  var arr = [];
-                  data2.forEach(function(ele) {
-                    arr.push(ele.dataValues);
-                  });
-                  firebase
-                    .ref("Users")
-                    .set({
-                      data: arr
-                    })
-                    .then(() => {
-                      twiml.message(
-                        `${data[0].name}, Your avatar has been updated.`
-                      );
-                      res.writeHead(200, { "Content-Type": "text/xml" });
-                      res.end(twiml.toString());
-                      return;
+          if (req.body.NumMedia > 0) {
+            var upload = require("../cloudinary.js");
+            upload(req.body.MediaUrl0, image => {
+              avatar = image.url;
+              console.log(`${avatar}`);
+              db.User
+                .update({ avatar: avatar }, { where: { id: data[0].id } })
+                .then(() => {
+                  db.User.findAll({}).then(data2 => {
+                    var arr = [];
+                    data2.forEach(function(ele) {
+                      arr.push(ele.dataValues);
                     });
+                    firebase
+                      .ref("Users")
+                      .set({
+                        data: arr
+                      })
+                      .then(() => {
+                        twiml.message(
+                          `${data[0].name}, Your avatar has been updated.`
+                        );
+                        res.writeHead(200, { "Content-Type": "text/xml" });
+                        res.end(twiml.toString());
+                        return;
+                      });
+                  });
                 });
-              });
+            });
           } else {
             var alreadyGuessed = false;
             firebase.ref().once("value", function(snapshot) {
@@ -263,7 +266,10 @@ module.exports = function(app) {
                   }
                   db.User
                     .update(
-                      { score: data[0].score + addToScore },
+                      {
+                        score: data[0].score + addToScore,
+                        lastScore: addToScore
+                      },
                       { where: { id: data[0].id } }
                     )
                     .then(data => {
