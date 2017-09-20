@@ -65,6 +65,7 @@ module.exports = function(app) {
         });
       });
   });
+
   app.post("/api/deleteUsers", (req, res) => {
     db.User
       .destroy({
@@ -101,71 +102,106 @@ module.exports = function(app) {
           console.log(
             `Phone Number Found! > ${data[0].phoneNumber} (${data[0].name})`
           );
-          var alreadyGuessed = false;
-          firebase.ref().once("value", function(snapshot) {
-            console.log(snapshot.child("Answers").val());
-            var answers = [];
-            var userTime = Date.now();
-            var questionTime;
-            textInTime = true;
+          var avatar;
 
-            if (snapshot.child("TimeStart").val()) {
-              questionTime = snapshot.child("TimeStart").val().time;
-              var seconds = (userTime - questionTime) / 1000;
-              console.log(`Time it took to guess: ${seconds} seconds`);
-              if (seconds >= 20) {
-                console.log(`You took too long to guess`);
-                textInTime = false;
-              }
-            }
+          //Did the user send an image?
+          // =======================================================================
 
-            if (snapshot.child("Answers").val()) {
-              answers = snapshot.child("Answers").val().answers;
-              answers.forEach(function(ele) {
-                if (ele.name === data[0].name) {
-                  alreadyGuessed = true;
-                }
+          if (req.body.NumMedia !== "0") {
+            avatar = req.body.MediaUrl0;
+            console.log(`${avatar}`);
+            db.User
+              .update({ avatar: avatar }, { where: { id: data[0].id } })
+              .then(() => {
+                db.User.findAll({}).then(data2 => {
+                  var arr = [];
+                  data2.forEach(function(ele) {
+                    arr.push(ele.dataValues);
+                  });
+                  firebase
+                    .ref("Users")
+                    .set({
+                      data: arr
+                    })
+                    .then(() => {
+                      twiml.message(
+                        `${data[0].name}, Your avatar has been updated.`
+                      );
+                      res.writeHead(200, { "Content-Type": "text/xml" });
+                      res.end(twiml.toString());
+                      return;
+                    });
+                });
               });
-            }
+          } else {
+            var alreadyGuessed = false;
+            firebase.ref().once("value", function(snapshot) {
+              console.log(snapshot.child("Answers").val());
+              var answers = [];
+              var userTime = Date.now();
+              var questionTime;
+              textInTime = true;
 
-            if (!alreadyGuessed) {
-              var guess = req.body.Body;
-              if (guess.length === 1) {
-                //If a known user texts an answer
-                guess = guess.toLowerCase();
-                if (
-                  guess === "a" ||
-                  guess === "b" ||
-                  guess === "c" ||
-                  guess === "d"
-                ) {
-                  checkAnswer(
-                    data,
-                    guess,
-                    function(data) {
-                      res.json(data);
-                    },
-                    seconds
-                  );
+              if (snapshot.child("TimeStart").val()) {
+                questionTime = snapshot.child("TimeStart").val().time;
+                var seconds = (userTime - questionTime) / 1000;
+                console.log(`Time it took to guess: ${seconds} seconds`);
+                if (seconds >= 20) {
+                  console.log(`You took too long to guess`);
+                  textInTime = false;
+                }
+              }
+
+              if (snapshot.child("Answers").val()) {
+                answers = snapshot.child("Answers").val().answers;
+                answers.forEach(function(ele) {
+                  if (ele.name === data[0].name) {
+                    alreadyGuessed = true;
+                  }
+                });
+              }
+
+              if (!alreadyGuessed) {
+                var guess = req.body.Body;
+                if (guess.length === 1) {
+                  //If a known user texts an answer
+                  guess = guess.toLowerCase();
+                  if (
+                    guess === "a" ||
+                    guess === "b" ||
+                    guess === "c" ||
+                    guess === "d"
+                  ) {
+                    checkAnswer(
+                      data,
+                      guess,
+                      function(data) {
+                        res.json(data);
+                      },
+                      seconds
+                    );
+                  } else {
+                    //If its NOT an A, B, C, or D
+                    twiml.message(
+                      `${data[0].name}, please text A, B, C, or D.`
+                    );
+                    res.writeHead(200, { "Content-Type": "text/xml" });
+                    res.end(twiml.toString());
+                  }
                 } else {
-                  //If its NOT an A, B, C, or D
+                  //Anything other than a one character response
                   twiml.message(`${data[0].name}, please text A, B, C, or D.`);
                   res.writeHead(200, { "Content-Type": "text/xml" });
                   res.end(twiml.toString());
                 }
               } else {
-                //Anything other than a one character response
-                twiml.message(`${data[0].name}, please text A, B, C, or D.`);
+                //User has already guessed
+                twiml.message(`${data[0].name}, you have already guessed!!!`);
                 res.writeHead(200, { "Content-Type": "text/xml" });
                 res.end(twiml.toString());
               }
-            } else {
-              //User has already guessed
-              twiml.message(`${data[0].name}, you have already guessed!!!`);
-              res.writeHead(200, { "Content-Type": "text/xml" });
-              res.end(twiml.toString());
-            }
-          });
+            });
+          }
         } else {
           console.log(`Data not found, now adding your info`);
           console.log(req.body);
