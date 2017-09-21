@@ -25,8 +25,30 @@ require("./routes/htmlRoutes.js")(app);
 require("./routes/phoneRoutes.js")(app);
 require("./routes/quizRoutes.js")(app);
 
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync({ force: true }).then(function() {
   app.listen(port, function() {
     console.log("smsApp listening on PORT " + port);
   });
+  // runTestUsersForResults();
 });
+
+function runTestUsersForResults() {
+  db.User.bulkCreate([
+    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
+    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
+    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
+    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" }
+  ]);
+}

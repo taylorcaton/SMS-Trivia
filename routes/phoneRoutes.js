@@ -217,7 +217,7 @@ module.exports = function(app) {
               console.log(`Info added!`);
               twiml.message(
                 `Welcome ${req.body
-                  .Body}! You have been added to the current game.`
+                  .Body}! You have been added to the current game. Text a picture of yourself to change your avatar!`
               );
 
               db.User.findAll({}).then(data => {
