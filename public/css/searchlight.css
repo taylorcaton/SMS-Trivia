@@ -1,0 +1,103 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+div {
+  
+}
+
+body {
+  background: -webkit-radial-gradient(at center bottom, #272762, #000000);
+  background: radial-gradient(at center bottom, #272762, #000000);
+}
+
+.left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  -webkit-animation: left 3s ease-in-out infinite;
+  animation: left 3s ease-in-out infinite;
+  background: -webkit-radial-gradient(
+    at bottom left,
+    rgba(255, 255, 255, 0.25),
+    rgba(0, 0, 0, 0)
+  );
+  background: radial-gradient(
+    at bottom left,
+    rgba(255, 255, 255, 0.25),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  -webkit-animation: right 4.98s ease-in-out alternate infinite;
+  animation: right 4.98s ease-in-out alternate infinite;
+  background: -webkit-radial-gradient(
+    at bottom right,
+    rgba(255, 255, 255, 0.25),
+    rgba(0, 0, 0, 0)
+  );
+  background: radial-gradient(
+    at bottom right,
+    rgba(255, 255, 255, 0.25),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+@-webkit-keyframes left {
+  from,
+  to {
+    -webkit-clip-path: polygon(20% 0, 5% 100%, 0 100%, 0 95%, 0 0);
+    clip-path: polygon(20% 0, 5% 100%, 0 100%, 0 95%, 0 0);
+  }
+  50% {
+    -webkit-clip-path: polygon(100% 0, 5% 100%, 0 100%, 0 95%, 80% 0);
+    clip-path: polygon(100% 0, 5% 100%, 0 100%, 0 95%, 80% 0);
+  }
+}
+@keyframes left {
+  from,
+  to {
+    -webkit-clip-path: polygon(20% 0, 5% 100%, 0 100%, 0 95%, 0 0);
+    clip-path: polygon(20% 0, 5% 100%, 0 100%, 0 95%, 0 0);
+  }
+  50% {
+    -webkit-clip-path: polygon(100% 0, 5% 100%, 0 100%, 0 95%, 80% 0);
+    clip-path: polygon(100% 0, 5% 100%, 0 100%, 0 95%, 80% 0);
+  }
+}
+@-webkit-keyframes right {
+  from,
+  to {
+    -webkit-clip-path: polygon(100% 0, 100% 95%, 100% 100%, 95% 100%, 80% 0);
+    clip-path: polygon(100% 0, 100% 95%, 100% 100%, 95% 100%, 80% 0);
+  }
+  50% {
+    -webkit-clip-path: polygon(20% 0, 100% 95%, 100% 100%, 95% 100%, 0 0);
+    clip-path: polygon(20% 0, 100% 95%, 100% 100%, 95% 100%, 0 0);
+  }
+}
+@keyframes right {
+  from,
+  to {
+    -webkit-clip-path: polygon(100% 0, 100% 95%, 100% 100%, 95% 100%, 80% 0);
+    clip-path: polygon(100% 0, 100% 95%, 100% 100%, 95% 100%, 80% 0);
+  }
+  50% {
+    -webkit-clip-path: polygon(20% 0, 100% 95%, 100% 100%, 95% 100%, 0 0);
+    clip-path: polygon(20% 0, 100% 95%, 100% 100%, 95% 100%, 0 0);
+  }
+}
