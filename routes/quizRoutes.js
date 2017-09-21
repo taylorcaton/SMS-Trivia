@@ -173,7 +173,9 @@ function getCat(category) {
     case "Animals":
       categoryNum = 27;
       break;
-
+    case "Hodgepodge Pickles":
+      categoryNum = null;
+      break;
     default:
       categoryNum = null;
       break;

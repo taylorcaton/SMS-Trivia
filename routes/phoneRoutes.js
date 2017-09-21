@@ -178,8 +178,13 @@ module.exports = function(app) {
                     checkAnswer(
                       data,
                       guess,
-                      function(data) {
-                        res.json(data);
+                      data => {
+                        //Anything other than a one character response
+                        twiml.message(
+                          `${data}`
+                        );
+                        res.writeHead(200, { "Content-Type": "text/xml" });
+                        res.end(twiml.toString());
                       },
                       seconds
                     );
