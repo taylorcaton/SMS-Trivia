@@ -2,7 +2,7 @@ html,
 body {
   position: relative;
   height: 100%;
-  background: black;
+  /* background: black; */
   overflow: hidden;
 }
 
@@ -10,10 +10,10 @@ div {
   
 }
 
-body {
+/* body {
   background: -webkit-radial-gradient(at center bottom, #272762, #000000);
   background: radial-gradient(at center bottom, #272762, #000000);
-}
+} */
 
 .left {
     position: absolute;

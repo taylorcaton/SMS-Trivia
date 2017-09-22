@@ -1,0 +1,38 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:700italic);
+
+#countdown {
+  font-family: 'Roboto Condensed', sans-serif;
+  width: 200px;
+  height: 100px;
+  margin-left: -100px;
+  margin-top: -50px;
+  color: white;
+  font-size: 5em;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease;
+  -moz-transition: opacity 0.4s ease;
+  -ms-transition: opacity 0.4s ease;
+  -o-transition: opacity 0.4s ease;
+  /* solve for flicker problem */
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}
+#countdown.puffer {
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  -webkit-transform: scale(1.6, 1.6);
+  -moz-transform: scale(1.6, 1.6);
+  -ms-transform: scale(1.6, 1.6);
+  -o-transform: scale(1.6, 1.6);
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -ms-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+}
+/* LESS Mixins */
