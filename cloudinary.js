@@ -10,7 +10,7 @@ cloudinary.config({
 
 module.exports = function upload(avatar, cb) {
     cloudinary.v2.uploader.upload(avatar, {transformation: [
-        {width: 800, height: 800, gravity: "face", radius: "max", crop: "crop", background: "rgb(255, 255, 255, 0)"},
+        {width: 800, height: 800, gravity: "face", radius: "max", crop: "crop"},
         {width: 200, crop: "scale"}
         ] }, 
         function(error, image ) {
