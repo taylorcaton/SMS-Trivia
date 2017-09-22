@@ -49,13 +49,13 @@ database.ref().on("value", function(snapshot) {
 function updatePlayerBox() {
   $("#playerBox").empty();
   console.log(playerArr);
-  var ul = $("<ul>");
+  var div = $("<div class='row'>");
 
   playerArr.forEach(function(ele) {
-    ul.append(`<li><img width='25px' src='${ele.avatar}'> ${ele.name}`);
+    div.append(`<div class='col-sm-2 text-center'><img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> <p id='playerNameDisplay' class='text-center'>${ele.name}</p>`);
   });
 
-  $("#playerBox").append(ul);
+  $("#playerBox").append(div);
 }
 
 function updateQuestionBox() {
@@ -67,11 +67,11 @@ function updateQuestionBox() {
       $("#questionBox").empty();
       var div = $("<div>");
 
-      div.append(`<h4>Category: ${data.category}</h4>`);
-      div.append(`<h1>${data.question}</h1>`);
+      div.append(`<h4 class='text-center'>Category: ${data.category}</h4>`);
+      div.append(`<h1 class='text-center'>${data.question}</h1>`);
       $("#questionBox").append(div);
 
-      var ul = $("<ol type='A'>");
+      var ul = $("<ol id='answerList' type='A'>");
       ul.append(`<li>${data.answer1}`);
       ul.append(`<li>${data.answer2}`);
       ul.append(`<li>${data.answer3}`);

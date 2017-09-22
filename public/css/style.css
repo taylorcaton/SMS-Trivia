@@ -1,9 +1,20 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:700);
+
 body {
-    background: url('../images/Stage_with_Blue_Curtains_Background.jpg');
-    background-size: cover;
+  font-family: "Roboto Condensed", sans-serif;
+  background: url("../images/Stage_with_Blue_Curtains_Background.jpg");
+  background-size: cover;
 }
 
-.card{
-    margin-top: 5px;
+.card {
+  margin-top: 5px;
+  background-color:rgba(255, 255, 255, 0.87);
 }
 
+#answerList {
+  font-size: 37px;
+}
+
+#playerName {
+    display: inline;
+}
