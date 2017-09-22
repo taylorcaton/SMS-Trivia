@@ -1,4 +1,5 @@
 var cloudinary = require("cloudinary");
+// var phone      = require("routes/phoneRoutes")
 cloudinary.config({ 
   cloud_name: 'avincent', 
   api_key: '779359958168278', 
@@ -7,36 +8,12 @@ cloudinary.config({
 
 // Upload code
 
-function upload(userImage) {
-    cloudinary.uploader.upload('../../../testpic.jpg', function(result) {
-    console.log(result);
-    },
-    {
-        public_id: 'test', 
-        crop: 'limit',
-        width: 2000,
-        height: 2000,
-        eager: [
-        {   
-            width: 200, height: 200, crop: 'thumb', gravity: 'face',
-            radius: 20, effect: 'sepia' 
-        },
-        { 
-            width: 100, height: 150, crop: 'fit', format: 'png' 
-        }
-        ],                                     
-        tags: ['special', 'for_homepage']
-  })      
+module.exports = function upload(avatar, cb) {
+    cloudinary.v2.uploader.upload(avatar, {transformation: [
+        {width: 800, height: 800, gravity: "face", radius: "max", crop: "crop"},
+        {width: 200, crop: "scale"}
+        ] }, 
+        function(error, image ) {
+            return cb(image);
+        })      
 };
-
-upload();
-// Image manipulation code
-
-/*function transform(newImage) {
-    cloudinary.image("sample", {"crop":"fill","gravity":"faces","width":300,"height":200,"format":"jpg"});
-};*/
-// Environment variable
-
-//cloudinary://779359958168278:hIsjHEv8E8LGQoEl_sEoANpyQ_Q@funkplayer82/
-
-

@@ -161,7 +161,7 @@ $("#nextQuestion").click(function() {
   $.get("/api/nextQuestion", data => {
     console.log(`after pressing next question data: ${data}`);
     if (data === "Game Over") {
-      window.location.href = "/";
+      window.location.href = "/finalResults";
     } else {
       window.location.href = "/question";
     }

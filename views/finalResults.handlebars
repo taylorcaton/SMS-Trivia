@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="card">
+        <div class="card-block text-xs-left">
+          <div id="winnerBox">
+            <h1>{{winner.name}} - {{winner.score}}</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-block text-xs-left">
+          <h4 class="card-title">Runner-up</h4>
+          <div id="runnerUps">
+            {{#each runnerUps}}
+            <li>
+              {{this.name}} - {{this.score}}
+            </li>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

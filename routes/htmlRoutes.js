@@ -26,8 +26,38 @@ module.exports = function(app) {
 
   // /results route loads results.handlebars
   app.get("/results", function(req, res) {
-    db.Question.findAll({}).then(data => {
-      res.render("results");
+    res.render("results");
+  });
+
+  app.get("/finalResults", function(req, res) {
+    db.User.findAll({}).then(data => {
+      
+      var winner;
+      var theRest = [];
+
+      var maxValue = 0;
+      var winnerIndex;
+
+      data.forEach( (ele,i) =>{
+        
+        if(ele.score > maxValue){
+          
+          winner = ele;
+          console.log(`new winner ${winner.name}`);
+          maxValue = ele.score;
+          winnerIndex = i;
+        }
+      });
+
+      data.splice(winnerIndex, 1);
+      theRest = data;
+
+      theRest.sort(function(a,b){
+        return b.score - a.score;
+      })
+      
+      res.render("finalResults", {winner: winner, runnerUps: theRest});
     });
   });
+
 };
