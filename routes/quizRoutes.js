@@ -24,6 +24,7 @@ module.exports = function(app) {
     // res.sendFile(path.join(__dirname, "../public/blog.html"));
     currentQuestion = 1;
     var categoryNum;
+    var difficulty;
 
     if (req.body.category) {
       console.log(`making a ${req.body.category} quiz`);
@@ -39,10 +40,17 @@ module.exports = function(app) {
       numberOfQuestions = 5;
     }
 
+    if (req.body.difficulty) {
+      console.log(`at the ${req.body.difficulty} difficulty`);
+      difficulty = req.body.difficulty;
+    } else {
+      difficulty = null;
+    }
+
     var options = {
       amount: numberOfQuestions,
       category: categoryNum,
-      difficulty: "easy",
+      difficulty: difficulty,
       type: "multiple"
     };
 

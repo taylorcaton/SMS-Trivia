@@ -92,9 +92,9 @@ function updateResultsBox() {
       $("#resultsBox").empty();
       var div = $("<div>");
 
-      div.append(`<h4>Category: ${data.category}</h4>`);
-      div.append(`<h4>${data.question}</h4>`);
-      div.append(`<h1>ANSWER: ${data.correct_letter}. ${data.correct_answer}`);
+      div.append(`<h4>${data.category}</h4>`);
+      div.append(`<h4 id='resultQuestion'>${data.question}</h4>`);
+      div.append(`<h1 id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`);
       $("#resultsBox").append(div);
     });
   }
@@ -146,7 +146,7 @@ $("#startGame").click(function() {
   console.log($("#category").val());
   $.post(
     "/api/createQuestions",
-    { category: $("#category").val(), amount: $("#numberOfQuestions").val() },
+    { category: $("#category").val(), amount: $("#numberOfQuestions").val(), difficulty: $("#difficulty").val() },
     data => {
       window.location.href = "/question";
     }

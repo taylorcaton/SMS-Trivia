@@ -6,10 +6,6 @@ body {
   overflow: hidden;
 }
 
-div {
-  
-}
-
 /* body {
   background: -webkit-radial-gradient(at center bottom, #272762, #000000);
   background: radial-gradient(at center bottom, #272762, #000000);
@@ -21,7 +17,7 @@ div {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 0;
   -webkit-animation: left 3s ease-in-out infinite;
   animation: left 3s ease-in-out infinite;
   background: -webkit-radial-gradient(
@@ -42,7 +38,7 @@ div {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 0;
   -webkit-animation: right 4.98s ease-in-out alternate infinite;
   animation: right 4.98s ease-in-out alternate infinite;
   background: -webkit-radial-gradient(

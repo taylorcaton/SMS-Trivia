@@ -2,10 +2,6 @@
 
 #countdown {
   font-family: 'Roboto Condensed', sans-serif;
-  width: 200px;
-  height: 100px;
-  margin-left: -100px;
-  margin-top: -50px;
   color: white;
   font-size: 5em;
   text-align: center;

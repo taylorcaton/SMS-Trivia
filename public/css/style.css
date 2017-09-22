@@ -2,3 +2,8 @@ body {
     background: url('../images/Stage_with_Blue_Curtains_Background.jpg');
     background-size: cover;
 }
+
+.card{
+    margin-top: 5px;
+}
+

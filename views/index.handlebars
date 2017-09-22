@@ -4,7 +4,7 @@
 
       <div class="card">
         <div class="card-block text-xs-left">
-          <h4 class="card-title">Quiz Demo</h4>
+          <h4 class="card-title"></h4>
           <div class="form-group">
             <label for="numberOfQuestions">How Many Questions?</label>
             <select class="form-control" name="numberOfQuestions" id="numberOfQuestions">
@@ -38,7 +38,15 @@
               <option>Animals</option>
             </select>
           </div>
-          <a href="/question"><button id="startGame" type="button" class="btn btn-primary">Start Game</button></a>
+          <div class="form-group">
+            <label for="difficulty">Difficulty?</label>
+            <select class="form-control" name="difficulty" id="difficulty">
+              <option>easy</option>
+              <option>medium</option>
+              <option>hard</option>
+            </select>
+          </div>
+          <button id="startGame" type="button" class="btn btn-primary">Start Game</button>
         </div>
       </div>
 
