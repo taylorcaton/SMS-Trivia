@@ -211,13 +211,16 @@ module.exports = function(app) {
             });
           }
         } else {
+          //Can't find the user, so we will add it to the users db and push it to firebase
           console.log(`Data not found, now adding your info`);
           console.log(req.body);
+          //Create a user
           db.User
             .create({
               phoneNumber: req.body.From,
               name: req.body.Body
             })
+            //Text the user that they have been added to the current game
             .then(data => {
               console.log(`Info added!`);
               twiml.message(
@@ -225,6 +228,7 @@ module.exports = function(app) {
                   .Body}! You have been added to the current game. Text a picture of yourself to change your avatar!`
               );
 
+              //Rebuild the player arr and push the arr to the firebase
               db.User.findAll({}).then(data => {
                 var arr = [];
                 data.forEach(function(ele) {
@@ -257,7 +261,8 @@ module.exports = function(app) {
 
               answers.push({
                 name: data[0].name,
-                avatar: data[0].avatar
+                avatar: data[0].avatar,
+                time: seconds
               });
               firebase
                 .ref("Answers")

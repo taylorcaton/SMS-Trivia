@@ -53,7 +53,9 @@ function updatePlayerBox() {
 
   playerArr.forEach(function(ele) {
     div.append(
-      `<div class='col-sm-2 text-center'><img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> <p id='playerNameDisplay' class='text-center'>${ele.name}</p>`
+      `<div class='col-sm-2 text-center'>
+        <img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> 
+        <p id='playerNameDisplay' class='text-center'>${ele.name}</p>`
     );
   });
 
@@ -122,7 +124,6 @@ function updateLeaderBox() {
       });
 
       $("#leaderBox").append(ul);
-
     });
   }
 }
@@ -131,13 +132,19 @@ function updateAnswers() {
   if ($("#answersBox").length) {
     $("#answersBox").empty();
     console.log(playerAnswers);
-    var ul = $("<ul>");
+
+    var div = $("<div class='row'>");
 
     playerAnswers.forEach(function(ele) {
-      ul.append(`<ul><img width='25px' src='${ele.avatar}'> ${ele.name}`);
+      div.append(
+        `<div class='col-sm-2 text-center'>
+            <img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> 
+            <p id='playerNameDisplay' class='text-center'>${ele.name}</p>
+            <p> id='playerTimeDisplay' class='text-center'>${ele.time}</p>`
+      );
     });
 
-    $("#answersBox").append(ul);
+    $("#answersBox").append(div);
   }
 }
 
