@@ -42,7 +42,12 @@ module.exports = function(app) {
 
     if (req.body.difficulty) {
       console.log(`at the ${req.body.difficulty} difficulty`);
-      difficulty = req.body.difficulty;
+      if(req.body.difficulty !== 'various'){
+        difficulty = req.body.difficulty;
+      }else{
+        difficulty = null;
+      }
+      
     } else {
       difficulty = null;
     }

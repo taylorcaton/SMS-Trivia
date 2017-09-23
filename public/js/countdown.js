@@ -20,8 +20,10 @@ $(function() {
     startNum = 20;
     currentNum = startNum;
     $("#countdown").html(currentNum); // init first time based on n
-    self.setInterval(function() {
-      anim();
-    }, 1000);
+    setTimeout(function() {
+      self.setInterval(function() {
+        anim();
+      }, 1000);
+    }, 5000);
   }
 });

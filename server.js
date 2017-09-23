@@ -33,22 +33,16 @@ db.sequelize.sync({ force: true }).then(function() {
 });
 
 function runTestUsersForResults() {
+  var rName = require("random-name");
   db.User.bulkCreate([
-    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
-    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
-    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
-    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
-    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
-    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
-    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
-    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
-    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
-    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
-    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
-    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" },
-    { name: "Taylor", score: Math.random() * 5000, phoneNumber: "5552223333" },
-    { name: "Alex", score: Math.random() * 5000, phoneNumber: "5552223334" },
-    { name: "Molly", score: Math.random() * 5000, phoneNumber: "5552223335" },
-    { name: "Lisa", score: Math.random() * 5000, phoneNumber: "5552223336" }
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223336" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223333" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223334" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223335" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223336" },
+    { name: rName.first(), score: Math.random() * 5000, phoneNumber: "5552223333" },
   ]);
 }

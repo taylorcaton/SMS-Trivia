@@ -52,7 +52,9 @@ function updatePlayerBox() {
   var div = $("<div class='row'>");
 
   playerArr.forEach(function(ele) {
-    div.append(`<div class='col-sm-2 text-center'><img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> <p id='playerNameDisplay' class='text-center'>${ele.name}</p>`);
+    div.append(
+      `<div class='col-sm-2 text-center'><img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> <p id='playerNameDisplay' class='text-center'>${ele.name}</p>`
+    );
   });
 
   $("#playerBox").append(div);
@@ -71,14 +73,16 @@ function updateQuestionBox() {
       div.append(`<h1 class='text-center'>${data.question}</h1>`);
       $("#questionBox").append(div);
 
-      var ul = $("<ol id='answerList' type='A'>");
-      ul.append(`<li>${data.answer1}`);
-      ul.append(`<li>${data.answer2}`);
-      ul.append(`<li>${data.answer3}`);
-      ul.append(`<li>${data.answer4}`);
+      setTimeout(function() {
+        var ul = $("<ol id='answerList' type='A'>");
+        ul.append(`<li>${data.answer1}`);
+        ul.append(`<li>${data.answer2}`);
+        ul.append(`<li>${data.answer3}`);
+        ul.append(`<li>${data.answer4}`);
 
-      $("#questionBox").append(ul);
-      saveCurrentTimeToFirebase();
+        $("#questionBox").append(ul);
+        saveCurrentTimeToFirebase();
+      }, 5000);
     });
   }
 }
@@ -94,7 +98,9 @@ function updateResultsBox() {
 
       div.append(`<h4>${data.category}</h4>`);
       div.append(`<h4 id='resultQuestion'>${data.question}</h4>`);
-      div.append(`<h1 id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`);
+      div.append(
+        `<h1 id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`
+      );
       $("#resultsBox").append(div);
     });
   }
@@ -116,6 +122,7 @@ function updateLeaderBox() {
       });
 
       $("#leaderBox").append(ul);
+
     });
   }
 }
@@ -146,7 +153,11 @@ $("#startGame").click(function() {
   console.log($("#category").val());
   $.post(
     "/api/createQuestions",
-    { category: $("#category").val(), amount: $("#numberOfQuestions").val(), difficulty: $("#difficulty").val() },
+    {
+      category: $("#category").val(),
+      amount: $("#numberOfQuestions").val(),
+      difficulty: $("#difficulty").val()
+    },
     data => {
       window.location.href = "/question";
     }
