@@ -180,9 +180,7 @@ module.exports = function(app) {
                       guess,
                       data => {
                         //Anything other than a one character response
-                        twiml.message(
-                          `${data}`
-                        );
+                        twiml.message(`${data}`);
                         res.writeHead(200, { "Content-Type": "text/xml" });
                         res.end(twiml.toString());
                       },
@@ -247,22 +245,31 @@ module.exports = function(app) {
   });
 
   function checkAnswer(data, guess, cb, seconds) {
+    //Get the current question id from firebase
     firebase.ref("CurrentQuestion").once("value", function(snapshot) {
+      //Match the firebase id with the id in the questions table
       db.Question
         .findAll({ where: { id: snapshot.val().currentQuestion } })
         .then(questObj => {
+          //Check to see if the user guessed the correct letter
           if (questObj[0].correct_letter === guess) {
+            //Grab all the guesses from firebase, rebuild with a new guess and push back to firebase
             firebase.ref("Answers").once("value", function(snapshot2) {
               console.log(snapshot2.val());
               var answers = [];
+              //Grab the guesses from the firebase snapshot
               if (snapshot2.val()) {
                 answers = snapshot2.val().answers;
               }
 
+              userTime = seconds;
+
+              console.log(`User Time to firebase: ${userTime}`);
+
               answers.push({
                 name: data[0].name,
                 avatar: data[0].avatar,
-                time: seconds
+                time: userTime
               });
               firebase
                 .ref("Answers")
@@ -297,9 +304,14 @@ module.exports = function(app) {
                 answers = snapshot2.val().answers;
               }
 
+              userTime = seconds;
+
+              console.log(`User Time to firebase: ${userTime}`);
+
               answers.push({
                 name: data[0].name,
-                avatar: data[0].avatar
+                avatar: data[0].avatar,
+                time: userTime
               });
               firebase
                 .ref("Answers")

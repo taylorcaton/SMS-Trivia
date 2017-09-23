@@ -12,7 +12,10 @@ var playerAnswers = [];
 var currentQuestion = 1;
 
 database.ref().on("value", function(snapshot) {
-  //is there anything there? If not create a blank data array.
+  
+  //Does Firebase contain the following? 
+  //If not create a blank data array.
+  //If it does, grab the data and update the corresponding divs
 
   if (snapshot.child("Users").exists() === false) {
     playerArr = [];
@@ -140,7 +143,7 @@ function updateAnswers() {
         `<div class='col-sm-2 text-center'>
             <img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> 
             <p id='playerNameDisplay' class='text-center'>${ele.name}</p>
-            <p> id='playerTimeDisplay' class='text-center'>${ele.time}</p>`
+            <p id='playerTimeDisplay' class='text-center'>${ele.time}</p>`
       );
     });
 
