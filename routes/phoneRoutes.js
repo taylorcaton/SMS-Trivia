@@ -214,7 +214,7 @@ module.exports = function(app) {
           console.log(req.body);
 
           if (req.body.Body.length > 15) {
-            twiml.message(`Your name must be between 1-15 characters \U1F60A`);
+            twiml.message(`Your name must be between 1-15 characters \U0001F60A`);
             res.writeHead(200, { "Content-Type": "text/xml" });
             res.end(twiml.toString());
           } else {
