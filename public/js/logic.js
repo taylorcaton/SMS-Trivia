@@ -12,8 +12,7 @@ var playerAnswers = [];
 var currentQuestion = 1;
 
 database.ref().on("value", function(snapshot) {
-  
-  //Does Firebase contain the following? 
+  //Does Firebase contain the following?
   //If not create a blank data array.
   //If it does, grab the data and update the corresponding divs
 
@@ -138,13 +137,20 @@ function updateAnswers() {
 
     var div = $("<div class='row'>");
 
-    playerAnswers.forEach(function(ele) {
-      div.append(
-        `<div class='col-sm-2 text-center'>
-            <img class='img-responsive' id='playerAvatarDisplay' width='100px' src='${ele.avatar}'> 
-            <p id='playerNameDisplay' class='text-center'>${ele.name}</p>
-            <p id='playerTimeDisplay' class='text-center'>${ele.time}</p>`
-      );
+    playerAnswers.forEach(function(ele, i) {
+      if (i < 6) {
+        div.append(
+          `<div class='col-sm-2 text-center'>
+              <img class='img-responsive' id='playerAvatarDisplay' width='100px' height='100px' src='${ele.avatar}'> 
+              <p id='playerNameDisplay' class='text-center'>${ele.name} - ${ele.time} sec</p>`
+        );
+      } else {
+        div.append(
+          `<div class='col-sm-1 text-center'>
+            <img class='img-responsive' id='playerAvatarDisplay' width='50px' height='50px' src='${ele.avatar}'> 
+            <p id='playerNameDisplay' class='text-center'>${ele.name} - ${ele.time} sec</p>`
+        );
+      }
     });
 
     $("#answersBox").append(div);
