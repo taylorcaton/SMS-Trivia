@@ -4,30 +4,24 @@ body {
   background: url("../images/Stage_with_Blue_Curtains_Background.jpg");
   background-size: cover;
 }
-#body1 {
-  background: url("../images/Stage_with_Blue_Curtains_Background.jpg");
-}
-#body2 {
-  background: url("../images/Stage_with_Blue_Curtains_Background.jpg");
-}
-#body3 {
-  background: url("../images/Stage_with_Blue_Curtains_Background.jpg");
-}
+
 #body4 {
   background: url("../images/fireworks.gif");
-  background-size: 200px;
   background-size: cover;
   color: white;
-  height: 500px;
   text-align: center;
   vertical-align: center;
 }
 .card {
   margin-top: 5px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.88);
   color: white;
-  text-align: center;
+  border: 3px solid white;
   vertical-align: center;
+}
+
+#phoneNumber{
+  font-size: 3rem;
 }
 
 #answerList {
@@ -37,5 +31,12 @@ body {
   display: inline;
 }
 #winnerBox {
-  margin-top: 200px;
+  text-align: center;
+  margin-top: 100px 0px;
+}
+
+#winnerBox h1{
+  font-size: 104px;
+  -webkit-text-stroke: 4px white;
+  color: rgba(0,0,0,0);
 }

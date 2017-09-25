@@ -17,6 +17,7 @@
   /* solve for flicker problem */
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden;
+  margin: -22px 0px;
 }
 #countdown.puffer {
   -webkit-opacity: 0;

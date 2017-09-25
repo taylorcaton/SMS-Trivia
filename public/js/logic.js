@@ -100,10 +100,10 @@ function updateResultsBox() {
       $("#resultsBox").empty();
       var div = $("<div>");
 
-      div.append(`<h4>${data.category}</h4>`);
-      div.append(`<h4 id='resultQuestion'>${data.question}</h4>`);
+      div.append(`<h4 class='text-center'>${data.category}</h4>`);
+      div.append(`<h4 class='text-center' id='resultQuestion'>${data.question}</h4>`);
       div.append(
-        `<h1 id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`
+        `<h1 class='text-center animated bounce' id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`
       );
       $("#resultsBox").append(div);
     });
@@ -223,6 +223,8 @@ $("#resetApp").click(() => {
   });
 });
 
-updateQuestionBox();
-updateResultsBox();
-updateLeaderBox();
+window.onload = function() {
+  updateQuestionBox();
+  updateResultsBox();
+  updateLeaderBox();
+};

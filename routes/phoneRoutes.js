@@ -212,34 +212,41 @@ module.exports = function(app) {
           //Can't find the user, so we will add it to the users db and push it to firebase
           console.log(`Data not found, now adding your info`);
           console.log(req.body);
-          //Create a user
-          db.User
-            .create({
-              phoneNumber: req.body.From,
-              name: req.body.Body
-            })
-            //Text the user that they have been added to the current game
-            .then(data => {
-              console.log(`Info added!`);
-              twiml.message(
-                `Welcome ${req.body
-                  .Body}! You have been added to the current game. Text a picture of yourself to change your avatar!`
-              );
 
-              //Rebuild the player arr and push the arr to the firebase
-              db.User.findAll({}).then(data => {
-                var arr = [];
-                data.forEach(function(ele) {
-                  arr.push(ele.dataValues);
-                });
+          if (req.body.Body.length > 15) {
+            twiml.message(`Your name must be between 1-15 characters \U1F60A`);
+            res.writeHead(200, { "Content-Type": "text/xml" });
+            res.end(twiml.toString());
+          } else {
+            //Create a user
+            db.User
+              .create({
+                phoneNumber: req.body.From,
+                name: req.body.Body
+              })
+              //Text the user that they have been added to the current game
+              .then(data => {
+                console.log(`Info added!`);
+                twiml.message(
+                  `Welcome ${req.body
+                    .Body}! You have been added to the current game. Text a picture of yourself to change your avatar!`
+                );
 
-                firebase.ref("Users").set({
-                  data: arr
+                //Rebuild the player arr and push the arr to the firebase
+                db.User.findAll({}).then(data => {
+                  var arr = [];
+                  data.forEach(function(ele) {
+                    arr.push(ele.dataValues);
+                  });
+
+                  firebase.ref("Users").set({
+                    data: arr
+                  });
+                  res.writeHead(200, { "Content-Type": "text/xml" });
+                  res.end(twiml.toString());
                 });
-                res.writeHead(200, { "Content-Type": "text/xml" });
-                res.end(twiml.toString());
               });
-            });
+          }
         }
       });
   });
