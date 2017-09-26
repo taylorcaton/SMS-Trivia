@@ -29,7 +29,7 @@ db.sequelize.sync({ force: true }).then(function() {
   app.listen(port, function() {
     console.log("smsApp listening on PORT " + port);
   });
-  runTestUsersForResults();
+  // runTestUsersForResults();
 });
 
 function runTestUsersForResults() {
