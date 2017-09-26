@@ -24,11 +24,14 @@ module.exports = function(app) {
     res.render("question");
   });
 
-  // /results route loads results.handlebars
+  //results route loads results.handlebars
   app.get("/results", function(req, res) {
     res.render("results");
   });
 
+  // finds separates the winner from the rest of the runner-ups
+  // sorts the runner ups
+  // send the objects to the finalResults.handlebars
   app.get("/finalResults", function(req, res) {
     db.User.findAll({}).then(data => {
       

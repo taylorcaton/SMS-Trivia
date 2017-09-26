@@ -1,5 +1,5 @@
 // *********************************************************************************
-// htmlRoutes.js - this file offers a set of routes for sending users to the various html pages
+// quizRoutes.js - this file offers a set of routes for controlling the quiz database
 // *********************************************************************************
 
 // Dependencies
@@ -19,7 +19,8 @@ module.exports = function(app) {
   // Each of the below routes just handles the HTML page that the user gets sent to.
 
   // destroys the old questions
-  // creates a brand new set of questions
+  // creates a brand new set of questions and jumbles the answers
+  // stores the questions in sql table 'questions'
   app.post("/api/createQuestions", bodyParser, function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/blog.html"));
     currentQuestion = 1;
@@ -87,6 +88,7 @@ module.exports = function(app) {
     });
   });
 
+  //returns the current question (where id = currentQuestion)
   app.get("/api/getCurrentQuestion", function(req, res) {
     if (currentQuestion <= numberOfQuestions) {
       db.Question
@@ -103,6 +105,9 @@ module.exports = function(app) {
     }
   });
 
+  //advances the nextQuestion counter, 
+  //resets the guesses array, updates firebase,
+  //and determines if the last question has passed.
   app.get("/api/nextQuestion", function(req, res) {
     currentQuestion++;
     firebase.ref("CurrentQuestion").set({
@@ -118,6 +123,7 @@ module.exports = function(app) {
     }
   });
 
+  //returns a list of users sorted by their score
   app.get("/api/getLeaders", function(req, res) {
     db.User
       .findAll({ where: { score: { $gte: 1 } }, order: [["score", "DESC"]] })

@@ -13,7 +13,7 @@ var bodyParser = require("body-parser").json();
 var firebase = require("../firebase.js");
 var textInTime;
 
-// Find your account sid and auth token in your Twilio account Console.
+// set-up the twilio client
 var client = new twilio(
   "AC8939166674e3ca2b20e2c90fc5851546",
   "df8747a2bb34e771685fa7113ceb5261"
@@ -22,7 +22,6 @@ var client = new twilio(
 // Routes
 // =============================================================
 module.exports = function(app) {
-
   //UNUSED ROUTE
   //Testing the twilio API
   app.post("/", function(req, res) {
@@ -71,6 +70,7 @@ module.exports = function(app) {
   });
 
   //Deletes (destroys) all rows in the users table
+  //Deletes data from firebase
   app.post("/api/deleteUsers", (req, res) => {
     db.User
       .destroy({
@@ -91,11 +91,12 @@ module.exports = function(app) {
       });
   });
 
-  //If a user sends an sms message
+  //If a user sends an sms message...
   app.post("/sms", bodyParser, (req, res) => {
     const twiml = new MessagingResponse();
 
     //Check to see if a user is in the current game.
+    // ======================================================================
     db.User
       .findAll({
         where: {
@@ -109,17 +110,22 @@ module.exports = function(app) {
           );
           var avatar;
 
-          //Did the user send an image?
+          //Did the known user send an image?
           // =======================================================================
 
           if (req.body.NumMedia > 0) {
+            // Send the image to cloudinary to find a face and send back a cropped image
+            // ======================================================================
             var upload = require("../cloudinary.js");
             upload(req.body.MediaUrl0, image => {
               avatar = image.url;
-              console.log(`${avatar}`);
+              //Add the image link to the database
+              // ======================================================================
               db.User
                 .update({ avatar: avatar }, { where: { id: data[0].id } })
                 .then(() => {
+                  //Rebuild the firebase database
+                  // ======================================================================
                   db.User.findAll({}).then(data2 => {
                     var arr = [];
                     data2.forEach(function(ele) {
@@ -142,6 +148,12 @@ module.exports = function(app) {
                 });
             });
           } else {
+
+            // The User sent a guess
+            // Get the data from firebase
+            // Calculate the time it took to guess
+            // Did the user already guess? Is an a,b,c, or d?
+            // ======================================================================
             var alreadyGuessed = false;
             firebase.ref().once("value", function(snapshot) {
               console.log(snapshot.child("Answers").val());
@@ -170,7 +182,7 @@ module.exports = function(app) {
               }
 
               if (!alreadyGuessed) {
-                var guess = req.body.Body;
+                var guess = req.body.Body.trim();
                 if (guess.length === 1) {
                   //If a known user texts an answer
                   guess = guess.toLowerCase();
@@ -214,17 +226,32 @@ module.exports = function(app) {
             });
           }
         } else {
-          //Can't find the user, so we will add it to the users db and push it to firebase
-          console.log(`Data not found, now adding your info`);
-          console.log(req.body);
+          //Can't find the user.
 
-          if (req.body.Body.length > 15) {
+          // Did the unknown user try to send a picture?
+          // ======================================================================
+          if (req.body.NumMedia > 0) {
             twiml.message(
-              `Your name must be between 1-15 characters \U0001F60A`
+              `You sent a picture before send your name!`
             );
             res.writeHead(200, { "Content-Type": "text/xml" });
             res.end(twiml.toString());
+          
+          // Did the unknown user try to send long name?
+          // ======================================================================
+          } else if (req.body.Body.length > 15) {
+            twiml.message(
+              `Your name must be between 1-15 characters`
+            );
+            res.writeHead(200, { "Content-Type": "text/xml" });
+            res.end(twiml.toString());
+
+          // User sent a string to be added as his name
+          // ======================================================================
           } else {
+            //so we will add it to the users db and push it to firebase
+            console.log(`Data not found, now adding your info`);
+            console.log(req.body);
             //Create a user
             db.User
               .create({
