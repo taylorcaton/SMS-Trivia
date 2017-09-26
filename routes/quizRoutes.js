@@ -42,12 +42,11 @@ module.exports = function(app) {
 
     if (req.body.difficulty) {
       console.log(`at the ${req.body.difficulty} difficulty`);
-      if(req.body.difficulty !== 'various'){
+      if (req.body.difficulty !== "various") {
         difficulty = req.body.difficulty;
-      }else{
+      } else {
         difficulty = null;
       }
-      
     } else {
       difficulty = null;
     }
@@ -107,11 +106,11 @@ module.exports = function(app) {
   app.get("/api/nextQuestion", function(req, res) {
     currentQuestion++;
     firebase.ref("CurrentQuestion").set({
-      currentQuestion: currentQuestion,
+      currentQuestion: currentQuestion
     });
     firebase.ref("Answers").set({
       answers: []
-    })
+    });
     if (currentQuestion <= numberOfQuestions) {
       res.send(`The current question id is ${currentQuestion}`);
     } else {
@@ -120,9 +119,11 @@ module.exports = function(app) {
   });
 
   app.get("/api/getLeaders", function(req, res) {
-    db.User.findAll({ where: { score: { $gte: 1 } } }, {order: ['score', 'DESC']}).then(data => {
-      res.json(data);
-    });
+    db.User
+      .findAll({ where: { score: { $gte: 1 } }, order: [["score", "DESC"]] })
+      .then(data => {
+        res.json(data);
+      });
   });
 };
 
