@@ -148,21 +148,22 @@ module.exports = function(app) {
                 });
             });
           } else {
-
             // The User sent a guess
             // Get the data from firebase
             // Calculate the time it took to guess
             // Did the user already guess? Is an a,b,c, or d?
             // ======================================================================
             var alreadyGuessed = false;
-            firebase.ref().once("value", function(snapshot) { //grab the current data from firebase
+            firebase.ref().once("value", function(snapshot) {
+              //grab the current data from firebase
               console.log(snapshot.child("Answers").val());
               var answers = [];
               var userTime = Date.now();
               var questionTime;
               textInTime = true;
 
-              if (snapshot.child("TimeStart").val()) { //store the time and calculate the time it took to guess
+              if (snapshot.child("TimeStart").val()) {
+                //store the time and calculate the time it took to guess
                 questionTime = snapshot.child("TimeStart").val().time;
                 var seconds = (userTime - questionTime) / 1000;
                 console.log(`Time it took to guess: ${seconds} seconds`);
@@ -172,7 +173,8 @@ module.exports = function(app) {
                 }
               }
 
-              if (snapshot.child("Answers").val()) { //Does the firebase snapshot contain a guess for this user?
+              if (snapshot.child("Answers").val()) {
+                //Does the firebase snapshot contain a guess for this user?
                 answers = snapshot.child("Answers").val().answers;
                 answers.forEach(function(ele) {
                   if (ele.name === data[0].name) {
@@ -181,9 +183,10 @@ module.exports = function(app) {
                 });
               }
 
-              if (!alreadyGuessed) { //If the user has not already guessed, grab the body of the text and check the answer
+              if (!alreadyGuessed) {
+                //If the user has not already guessed, grab the body of the text and check the answer
                 var guess = req.body.Body.trim();
-                if (guess.length === 1) { 
+                if (guess.length === 1) {
                   //If a known user texts an answer
                   guess = guess.toLowerCase();
                   if (
@@ -231,23 +234,19 @@ module.exports = function(app) {
           // Did the unknown user try to send a picture?
           // ======================================================================
           if (req.body.NumMedia > 0) {
-            twiml.message(
-              `You sent a picture before send your name!`
-            );
-            res.writeHead(200, { "Content-Type": "text/xml" });
-            res.end(twiml.toString());
-          
-          // Did the unknown user try to send long name?
-          // ======================================================================
-          } else if (req.body.Body.length > 15) {
-            twiml.message(
-              `Your name must be between 1-15 characters`
-            );
+            twiml.message(`You sent a picture before send your name!`);
             res.writeHead(200, { "Content-Type": "text/xml" });
             res.end(twiml.toString());
 
-          // User sent a string to be added as his name
-          // ======================================================================
+            // Did the unknown user try to send long name?
+            // ======================================================================
+          } else if (req.body.Body.length > 15) {
+            twiml.message(`Your name must be between 1-15 characters`);
+            res.writeHead(200, { "Content-Type": "text/xml" });
+            res.end(twiml.toString());
+
+            // User sent a string to be added as his name
+            // ======================================================================
           } else {
             //so we will add it to the users db and push it to firebase
             console.log(`Data not found, now adding your info`);
@@ -361,8 +360,8 @@ module.exports = function(app) {
                 })
                 .then(() => {
                   return cb(
-                    `You guessed ${guess}, and you got it wrong! ${questObj[0]
-                      .correct_letter}`
+                    `You guessed ${guess}. Sorry, you got it wrong. (The correct choice was ${questObj[0]
+                      .correct_letter})`
                   );
                 });
             });
