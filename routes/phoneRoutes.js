@@ -362,7 +362,7 @@ module.exports = function(app) {
                   return cb(
                     `You guessed ${guess}. Sorry, you got it wrong. (The correct choice was ${questObj[0]
                       .correct_letter})`
-                  );
+                  ); 
                 });
             });
           }
