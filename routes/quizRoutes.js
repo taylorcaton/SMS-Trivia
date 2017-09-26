@@ -126,6 +126,7 @@ module.exports = function(app) {
   });
 };
 
+//Converts the category name into the category number (for the opentriviadb api)
 function getCat(category) {
   var categoryNum = null;
   switch (category) {
@@ -197,6 +198,7 @@ function getCat(category) {
   return categoryNum;
 }
 
+//Mixes the correct answer the with the incorrect ansers
 function jumbleAnswers(data) {
   console.log(data);
   var c = data.correct_answer;
@@ -235,6 +237,8 @@ function jumbleAnswers(data) {
   return newObj;
 }
 
+//Generic array shuffler
+//Returns an array with the elements shuffled
 function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,

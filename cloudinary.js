@@ -20,7 +20,7 @@ module.exports = function upload(avatar, cb) {
           radius: "max",
           crop: "crop"
         },
-        { width: 200, crop: "scale" },
+        { width: 200, height: 200, crop: "scale" },
       ],
       format: "png",
     },

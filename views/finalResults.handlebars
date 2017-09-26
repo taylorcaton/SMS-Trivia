@@ -7,20 +7,21 @@
       <div class="card" id="body4">
         <div class="card-block text-xs-left">
           <div id="winnerBox">
-            <h1 class='animated jackInTheBox'>{{winner.name}} - {{winner.score}}</h1>
+            <img src="{{winner.avatar}}" width='200px' height='200px' id='winnerPic'>
+            <h1 id='winnerName'>{{winner.name}} - {{winner.score}}</h1>
           </div>
         </div>
       </div>
       <div class="card">
         <div class="card-block text-xs-left">
           <h4 class="card-title">Runner-ups</h4>
-          <div id="runnerUps">
+          <ol id="runnerUps" start='2'>
             {{#each runnerUps}}
             <li>
               {{this.name}} - {{this.score}}
             </li>
             {{/each}}
-          </div>
+          </ol>
         </div>
       </div>
     </div>

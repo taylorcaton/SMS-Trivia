@@ -22,8 +22,9 @@ var client = new twilio(
 // Routes
 // =============================================================
 module.exports = function(app) {
-  // Each of the below routes just handles the HTML page that the user gets sent to.
 
+  //UNUSED ROUTE
+  //Testing the twilio API
   app.post("/", function(req, res) {
     console.log(req.body);
     // Send the text message.
@@ -37,13 +38,16 @@ module.exports = function(app) {
         res.send(data);
       });
   });
+  //=========================================================
 
+  //Gets all users
   app.get("/api/all", (req, res) => {
     db.User.findAll({}).then(data => {
       res.json(data);
     });
   });
 
+  //Creates a random user with a random first name and phone number
   app.post("/api/randomUser", (req, res) => {
     var rName = require("random-name");
     db.User
@@ -66,6 +70,7 @@ module.exports = function(app) {
       });
   });
 
+  //Deletes (destroys) all rows in the users table
   app.post("/api/deleteUsers", (req, res) => {
     db.User
       .destroy({
@@ -214,7 +219,9 @@ module.exports = function(app) {
           console.log(req.body);
 
           if (req.body.Body.length > 15) {
-            twiml.message(`Your name must be between 1-15 characters \U0001F60A`);
+            twiml.message(
+              `Your name must be between 1-15 characters \U0001F60A`
+            );
             res.writeHead(200, { "Content-Type": "text/xml" });
             res.end(twiml.toString());
           } else {

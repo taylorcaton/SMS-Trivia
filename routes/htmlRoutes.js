@@ -43,7 +43,6 @@ module.exports = function(app) {
         if(ele.score > maxValue){
           
           winner = ele;
-          console.log(`new winner ${winner.name}`);
           maxValue = ele.score;
           winnerIndex = i;
         }

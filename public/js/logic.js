@@ -101,7 +101,9 @@ function updateResultsBox() {
       var div = $("<div>");
 
       div.append(`<h4 class='text-center'>${data.category}</h4>`);
-      div.append(`<h4 class='text-center' id='resultQuestion'>${data.question}</h4>`);
+      div.append(
+        `<h4 class='text-center' id='resultQuestion'>${data.question}</h4>`
+      );
       div.append(
         `<h1 class='text-center animated bounce' id='correctAnswer'>${data.correct_letter.toUpperCase()}. ${data.correct_answer}`
       );
@@ -117,15 +119,17 @@ function updateLeaderBox() {
     }).done(function(data) {
       console.log(data);
       $("#leaderBox").empty();
-      var ul = $("<ul>");
 
-      data.forEach(function(ele) {
-        ul.append(
-          `<li><img width='25px' src='${ele.avatar}'> ${ele.name}: ${ele.score}`
-        );
+      data.forEach(function(ele, index) {
+        setTimeout(function() {
+          $("#leaderBox").append(
+            `<div class='col-sm-2 text-center animated fadeInDown'>
+              <img width='50pxpx' height='50px' src='${ele.avatar}'> 
+              <p id='playerNameDisplay' class='text-center'><span id='rank'>${index +
+                1}.</span> ${ele.name}: ${ele.score} points</p>`
+          );
+        }, 500 * index);
       });
-
-      $("#leaderBox").append(ul);
     });
   }
 }
@@ -154,6 +158,23 @@ function updateAnswers() {
     });
 
     $("#answersBox").append(div);
+  }
+}
+
+function animateWinner() {
+  function addClassDelayed(jqObj, c, to) {
+    setTimeout(function() {
+      jqObj.addClass(c);
+    }, to);
+  }
+
+  if ($("#winnerName").length) {
+    setInterval(function() {
+      addClassDelayed($('#winnerName'), "animated jackInTheBox", 600);
+      addClassDelayed($('#winnerPic'), "animated tada", 600)
+      $('#winnerPic').removeClass('animated tada');
+      $('#winnerName').removeClass('animated jackInTheBox');
+    }, 3000);
   }
 }
 
@@ -227,4 +248,5 @@ window.onload = function() {
   updateQuestionBox();
   updateResultsBox();
   updateLeaderBox();
+  animateWinner();
 };

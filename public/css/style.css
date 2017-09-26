@@ -40,3 +40,8 @@ body {
   -webkit-text-stroke: 4px white;
   color: rgba(0,0,0,0);
 }
+
+#rank{
+  font-family: serif;
+  font-size: 20px;
+}

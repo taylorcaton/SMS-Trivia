@@ -22,9 +22,9 @@ $(function() {
     $("#countdown").html(currentNum); // init first time based on n
     
     setTimeout(function() { //Wait 5 seconds before starting
-      // self.setInterval(function() { //Run anim every 1 second
-      //   anim();
-      // }, 1000);
+      self.setInterval(function() { //Run anim every 1 second
+        anim();
+      }, 1000);
     }, 5000);
   }
 });
