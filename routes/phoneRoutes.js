@@ -252,10 +252,14 @@ module.exports = function(app) {
             console.log(`Data not found, now adding your info`);
             console.log(req.body);
             //Create a user
+            var avatarList = require('../avatars.js');
+            var randomAvatar = avatarList.splice(Math.floor(Math.random()*avatarList.length), 1);
             db.User
               .create({
                 phoneNumber: req.body.From,
-                name: req.body.Body
+                name: req.body.Body,
+                avatar: randomAvatar[0],
+
               })
               //Text the user that they have been added to the current game
               .then(data => {
