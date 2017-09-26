@@ -155,14 +155,14 @@ module.exports = function(app) {
             // Did the user already guess? Is an a,b,c, or d?
             // ======================================================================
             var alreadyGuessed = false;
-            firebase.ref().once("value", function(snapshot) {
+            firebase.ref().once("value", function(snapshot) { //grab the current data from firebase
               console.log(snapshot.child("Answers").val());
               var answers = [];
               var userTime = Date.now();
               var questionTime;
               textInTime = true;
 
-              if (snapshot.child("TimeStart").val()) {
+              if (snapshot.child("TimeStart").val()) { //store the time and calculate the time it took to guess
                 questionTime = snapshot.child("TimeStart").val().time;
                 var seconds = (userTime - questionTime) / 1000;
                 console.log(`Time it took to guess: ${seconds} seconds`);
@@ -172,7 +172,7 @@ module.exports = function(app) {
                 }
               }
 
-              if (snapshot.child("Answers").val()) {
+              if (snapshot.child("Answers").val()) { //Does the firebase snapshot contain a guess for this user?
                 answers = snapshot.child("Answers").val().answers;
                 answers.forEach(function(ele) {
                   if (ele.name === data[0].name) {
@@ -181,9 +181,9 @@ module.exports = function(app) {
                 });
               }
 
-              if (!alreadyGuessed) {
+              if (!alreadyGuessed) { //If the user has not already guessed, grab the body of the text and check the answer
                 var guess = req.body.Body.trim();
-                if (guess.length === 1) {
+                if (guess.length === 1) { 
                   //If a known user texts an answer
                   guess = guess.toLowerCase();
                   if (
