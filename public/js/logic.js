@@ -171,7 +171,7 @@ function animateWinner() {
   if ($("#winnerName").length) {
     setInterval(function() {
       addClassDelayed($('#winnerName'), "animated jackInTheBox", 600);
-      addClassDelayed($('#winnerPic'), "animated tada", 600)
+      addClassDelayed($('#winnerPic'), "animated tada", 600);
       $('#winnerPic').removeClass('animated tada');
       $('#winnerName').removeClass('animated jackInTheBox');
     }, 3000);
@@ -179,14 +179,16 @@ function animateWinner() {
 }
 
 function runnerUpsAnimation() {
-  $('.runnerUp').forEach(function(element) {
-    addClassDelayed($('.runnerUp'), "animated hinge", 5000);
-    removeClass('animated hinge');
-  
-  
-    setTimeout(function(){
-   },3000)
- });
+  if ($(".runnerUp").length) {
+    //if the class exists
+
+    setTimeout(function() {
+      
+        addClassDelayed($(".runnerUp"), "animated hinge", 5000);
+        $('.runnerUp').removeClass("animated hinge");
+     
+    }, 5000);
+  }
 }
 
 function saveCurrentTimeToFirebase() {
@@ -228,7 +230,7 @@ $("#nextQuestion").click(function() {
 });
 
 $("#resetApp").click(() => {
-  $.post("/api/deleteQuestions", (res) => {
+  $.post("/api/deleteQuestions", res => {
     console.log(res);
   });
 
