@@ -309,15 +309,9 @@ module.exports = function(app) {
       db.Question
         .findAll({ where: { id: snapshot.val().currentQuestion } })
         .then(questObj => {
-
-          if(questObj.length === 0){
-            return cb(
-              `Game hasn't started yet!`
-            );
-          }
-
+         
           //Check to see if the user guessed the correct letter
-          else if (questObj[0].correct_letter === guess) {
+          if (questObj[0] && questObj[0].correct_letter === guess) {
             //Grab all the guesses from firebase, rebuild with a new guess and push back to firebase
             firebase.ref("Answers").once("value", function(snapshot2) {
               console.log(snapshot2.val());
@@ -361,7 +355,7 @@ module.exports = function(app) {
                     });
                 });
             });
-          } else {
+          } else if(questObj[0]){
             firebase.ref("Answers").once("value", function(snapshot2) {
               console.log(snapshot2.val());
               var answers = [];
@@ -390,6 +384,10 @@ module.exports = function(app) {
                   );
                 });
             });
+          }else{
+            return cb(
+              `Game hasn't started yet`
+            );
           }
         });
     });
