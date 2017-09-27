@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container"></div>
+</body>
+<script>
+
+
+
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+        return this;
+    }
+});
+
+var fromFB = [{
+    currentScore: 10,
+    answer: 5
+},
+{
+    currentScore: 13
+},
+ {
+    currentScore: 20,
+    answer: 10
+}
+]
+var temp =[];
+
+fromFB.forEach(function(user,i){
+    var span = $('<div>')
+        span.addClass(`user${i}`)
+        span.append(`Score: <span class="span${i}">${user.currentScore}<span>`)
+        $('.container').prepend(span)
+        
+    //$(`#${i}`).append()
+   if(user.answer){
+    var copy = user;
+    console.log(copy)
+        copy['userId'] = i
+        temp.push(copy)
+   }         
+})
+
+setTimeout(function(){
+    // $(`#${1}`).empty()
+    // var newScore = fromFB[1].currentScore + fromFB[1].answer
+    // $(`#${1}`).append(`Score${newScore}`)
+    temp.forEach(function(user,i){
+    
+        setTimeout(function(){
+            
+        var newTotal = user.currentScore + user.answer
+        var id = user.userId
+        $('.user'+id).animateCss('wobble')
+        setTimeout(()=>{
+            
+        
+       
+
+        $('.span'+id).empty()
+       
+        $('.span'+id).append(`${newTotal}`).animateCss('wobble');
+    },1500)
+        },1000)
+
+    })
+
+}, 2000)
+
+</script>
+</html>
