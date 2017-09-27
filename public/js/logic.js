@@ -217,6 +217,10 @@ $("#nextQuestion").click(function() {
 });
 
 $("#resetApp").click(() => {
+  $.post("/api/deleteQuestions", (res) => {
+    console.log(res);
+  });
+
   $.post("/api/deleteUsers", () => {
     database
       .ref("CurrentQuestion")

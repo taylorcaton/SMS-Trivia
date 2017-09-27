@@ -91,6 +91,18 @@ module.exports = function(app) {
       });
   });
 
+  //Deletes (destroys) all rows in the Questions table
+  app.post("/api/deleteQuestions", (req, res) => {
+    db.Question
+      .destroy({
+        where: {},
+        truncate: true
+      })
+      .then(() => {
+        res.send(`All questions have been deleted `);
+      });
+  });
+
   //If a user sends an sms message...
   app.post("/sms", bodyParser, (req, res) => {
     const twiml = new MessagingResponse();
@@ -252,14 +264,16 @@ module.exports = function(app) {
             console.log(`Data not found, now adding your info`);
             console.log(req.body);
             //Create a user
-            var avatarList = require('../avatars.js');
-            var randomAvatar = avatarList.splice(Math.floor(Math.random()*avatarList.length), 1);
+            var avatarList = require("../avatars.js");
+            var randomAvatar = avatarList.splice(
+              Math.floor(Math.random() * avatarList.length),
+              1
+            );
             db.User
               .create({
                 phoneNumber: req.body.From,
                 name: req.body.Body,
-                avatar: randomAvatar[0],
-
+                avatar: randomAvatar[0]
               })
               //Text the user that they have been added to the current game
               .then(data => {
@@ -295,8 +309,15 @@ module.exports = function(app) {
       db.Question
         .findAll({ where: { id: snapshot.val().currentQuestion } })
         .then(questObj => {
+
+          if(questObj.length === 0){
+            return cb(
+              `Game hasn't started yet!`
+            );
+          }
+
           //Check to see if the user guessed the correct letter
-          if (questObj[0].correct_letter === guess) {
+          else if (questObj[0].correct_letter === guess) {
             //Grab all the guesses from firebase, rebuild with a new guess and push back to firebase
             firebase.ref("Answers").once("value", function(snapshot2) {
               console.log(snapshot2.val());
@@ -366,7 +387,7 @@ module.exports = function(app) {
                   return cb(
                     `You guessed ${guess}. Sorry, you got it wrong. (The correct choice was ${questObj[0]
                       .correct_letter})`
-                  ); 
+                  );
                 });
             });
           }
