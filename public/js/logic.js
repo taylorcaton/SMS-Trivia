@@ -178,6 +178,17 @@ function animateWinner() {
   }
 }
 
+function runnerUpsAnimation() {
+  $('.runnerUp').forEach(function(element) {
+    addClassDelayed($('.runnerUp'), "animated hinge", 5000);
+    removeClass('animated hinge');
+  
+  
+    setTimeout(function(){
+   },3000)
+ });
+}
+
 function saveCurrentTimeToFirebase() {
   var time = Date.now();
   console.log(`Curent time going to firebase: ${time}`);
@@ -253,4 +264,5 @@ window.onload = function() {
   updateResultsBox();
   updateLeaderBox();
   animateWinner();
+  runnerUpsAnimation();
 };
