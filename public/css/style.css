@@ -22,6 +22,7 @@ body {
 
 #phoneNumber{
   font-size: 3rem;
+  display: inline;
 }
 
 #answerList {
