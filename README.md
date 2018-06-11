@@ -1,8 +1,6 @@
 # SMS Trivia
 Trivia App that uses SMS for user input
 
-Link: http://sms-trivia.herokuapp.com/
-
 ![Preview Image](https://taylorcaton.github.io/img/portfolio/trivia.png)
 
 Credits: 
